@@ -1,0 +1,6 @@
+# Core dependencies for Notion AI Integration
+# Pin OpenAI to the last pre-1.0 release to support the legacy Completions API
+openai==0.28.1
+
+# Official Notion Python client
+notion-client>=2.0.0,<3.0.0
