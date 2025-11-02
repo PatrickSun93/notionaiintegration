@@ -36,33 +36,47 @@ def handle_slash_command(command, **kwargs):
 
 def summarize_page(page_id):
     """Summarizes the content of a Notion page."""
-    config = ai_config.get_config()
-    ai = ai_service.get_ai_service(config)
+    try:
+        config = ai_config.get_config()
+        ai = ai_service.get_ai_service(config)
 
-    content = notion_service.get_page_content(page_id)
-    summary = ai.generate_summary(content)
+        content = notion_service.get_page_content(page_id)
+        summary = ai.generate_summary(content)
 
-    notion_service.add_comment_to_page(page_id, summary)
+        notion_service.add_comment_to_page(page_id, summary)
+        print(f"Successfully summarized page {page_id}")
+    except Exception as e:
+        print(f"Error summarizing page: {e}")
+
 
 def summarize_block(block_id):
     """Summarizes the content of a selected block."""
-    config = ai_config.get_config()
-    ai = ai_service.get_ai_service(config)
+    try:
+        config = ai_config.get_config()
+        ai = ai_service.get_ai_service(config)
 
-    content = notion_service.get_selected_block_content(block_id)
-    summary = ai.generate_summary(content)
+        content = notion_service.get_selected_block_content(block_id)
+        summary = ai.generate_summary(content)
 
-    notion_service.add_comment_to_block(block_id, summary)
+        notion_service.add_comment_to_block(block_id, summary)
+        print(f"Successfully summarized block {block_id}")
+    except Exception as e:
+        print(f"Error summarizing block: {e}")
+
 
 def generate_blog_post(topic, template_name):
     """Generates a blog post on a given topic using a template."""
-    config = ai_config.get_config()
-    ai = ai_service.get_ai_service(config)
+    try:
+        config = ai_config.get_config()
+        ai = ai_service.get_ai_service(config)
 
-    template_content = notion_service.get_template_content(template_name)
-    blog_post_content = ai.generate_blog_post(topic, template_content)
+        template_content = notion_service.get_template_content(template_name)
+        blog_post_content = ai.generate_blog_post(topic, template_content)
 
-    notion_service.create_page_in_database(config["blog_database_id"], topic, blog_post_content)
+        notion_service.create_page_in_database(config["blog_database_id"], topic, blog_post_content)
+        print(f"Successfully generated blog post on '{topic}'")
+    except Exception as e:
+        print(f"Error generating blog post: {e}")
 
 if __name__ == '__main__':
     # Simulate slash command invocations for testing
