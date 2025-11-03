@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Notion AI Integration{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h2>Dashboard</h2>
+    
+    <div class="quick-actions">
+        <a href="{{ url_for('chat') }}" class="btn btn-primary">Chat with AI</a>
+        <a href="{{ url_for('editor') }}" class="btn btn-secondary">Create New Page</a>
+    </div>
+    
+    <div class="content-grid">
+        <div class="content-section">
+            <h3>Notion Pages</h3>
+            <div id="pages-list" class="content-list">
+                <!-- Pages will be loaded dynamically -->
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h3>Notion Databases</h3>
+            <div id="databases-list" class="content-list">
+                <!-- Databases will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Load dashboard content on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadDashboardContent();
+    });
+</script>
+{% endblock %}
