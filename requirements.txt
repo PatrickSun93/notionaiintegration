@@ -5,3 +5,6 @@ requests>=2.0.0
 
 # Official Notion Python client
 notion-client>=2.0.0,<3.0.0
+
+# Web framework
+Flask>=2.0.0

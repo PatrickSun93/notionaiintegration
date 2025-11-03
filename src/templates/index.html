@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notion AI Chat</title>
+    <style>
+        body { font-family: sans-serif; }
+        #chat-container { width: 80%; max-width: 800px; margin: 0 auto; }
+        #chat-history { height: 400px; border: 1px solid #ccc; overflow-y: scroll; padding: 10px; }
+        #chat-input { display: flex; }
+        #chat-input input { flex-grow: 1; }
+    </style>
+</head>
+<body>
+    <div id="chat-container">
+        <h1>Notion AI Chat</h1>
+        <div id="chat-history"></div>
+        <div id="chat-input">
+            <input type="text" id="message" placeholder="Type your message...">
+            <button id="send">Send</button>
+        </div>
+        <div id="notion-controls">
+            <select id="notion-pages"></select>
+            <button id="load-pages">Load Pages</button>
+            <button id="create-page">Create New Page</button>
+            <button id="edit-page">Edit Page</button>
+        </div>
+        <div id="create-page-form" style="display: none;">
+            <input type="text" id="page-title" placeholder="Page Title">
+            <textarea id="page-content" placeholder="Page Content"></textarea>
+            <button id="save-page">Save Page</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('load-pages').addEventListener('click', async () => {
+            const response = await fetch('/notion/pages');
+            const pages = await response.json();
+            const select = document.getElementById('notion-pages');
+            select.innerHTML = '';
+            pages.forEach(page => {
+                const option = document.createElement('option');
+                option.value = page.id;
+                option.textContent = page.title;
+                select.appendChild(option);
+            });
+        });
+
+        document.getElementById('edit-page').addEventListener('click', () => {
+            alert('Coming Soon: Edit page functionality is under development.');
+        });
+
+        document.getElementById('create-page').addEventListener('click', () => {
+            document.getElementById('create-page-form').style.display = 'block';
+        });
+
+        document.getElementById('save-page').addEventListener('click', async () => {
+            const title = document.getElementById('page-title').value;
+            const content = document.getElementById('page-content').value;
+
+            await fetch('/notion/pages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, content })
+            });
+
+            document.getElementById('create-page-form').style.display = 'none';
+        });
+
+        document.getElementById('send').addEventListener('click', async () => {
+            const messageInput = document.getElementById('message');
+            const message = messageInput.value;
+            messageInput.value = '';
+
+            const notionPageSelect = document.getElementById('notion-pages');
+            const notionPageId = notionPageSelect.value;
+
+            const chatHistory = document.getElementById('chat-history');
+            chatHistory.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message, notion_page_id: notionPageId })
+            });
+
+            const data = await response.json();
+            chatHistory.innerHTML += `<p><strong>AI:</strong> ${data.response}</p>`;
+        });
+    </script>
+</body>
+</html>
