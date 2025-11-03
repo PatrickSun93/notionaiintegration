@@ -3,10 +3,10 @@ import openai
 import anthropic
 import requests
 import json
-from config.ai_config import get_config, get_prompts
+from src import config_service
 
-config = get_config()
-prompts = get_prompts()
+config = config_service.get_config()
+prompts = config_service.get_prompts()
 
 class AIProvider:
     def generate_summary(self, content):
@@ -149,3 +149,32 @@ def get_ai_service(config):
         return OllamaService(config)
     else:
         raise ValueError(f"Unknown AI provider: {provider}")
+
+def validate_api_keys(config):
+    errors = []
+
+    # Validate OpenAI API key
+    try:
+        client = openai.OpenAI(api_key=config["openai_api_key"])
+        client.models.list()
+    except Exception as e:
+        errors.append(f"OpenAI API key is invalid: {e}")
+
+    # Validate Claude API key
+    try:
+        client = anthropic.Anthropic(api_key=config["claude_api_key"])
+        client.models.list()
+    except Exception as e:
+        errors.append(f"Claude API key is invalid: {e}")
+
+    # Validate Deepseek API key
+    try:
+        client = openai.OpenAI(
+            api_key=config["deepseek_api_key"],
+            base_url="https://api.deepseek.com"
+        )
+        client.models.list()
+    except Exception as e:
+        errors.append(f"Deepseek API key is invalid: {e}")
+
+    return errors

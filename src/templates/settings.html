@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+</head>
+<body>
+    <h1>Settings</h1>
+    <form method="POST">
+        <label for="provider">AI Provider:</label>
+        <select name="provider" id="provider">
+            <option value="openai" {% if config.provider == 'openai' %}selected{% endif %}>OpenAI</option>
+            <option value="claude" {% if config.provider == 'claude' %}selected{% endif %}>Claude</option>
+            <option value="deepseek" {% if config.provider == 'deepseek' %}selected{% endif %}>Deepseek</option>
+            <option value="ollama" {% if config.provider == 'ollama' %}selected{% endif %}>Ollama</option>
+        </select>
+        <br><br>
+
+        <label for="notion_api_key">Notion API Key:</label>
+        <input type="password" name="notion_api_key" id="notion_api_key" value="{{ config.notion_api_key }}">
+        <br><br>
+
+        <label for="openai_api_key">OpenAI API Key:</label>
+        <input type="password" name="openai_api_key" id="openai_api_key" value="{{ config.openai_api_key }}">
+        <br><br>
+
+        <label for="claude_api_key">Claude API Key:</label>
+        <input type="password" name="claude_api_key" id="claude_api_key" value="{{ config.claude_api_key }}">
+        <br><br>
+
+        <label for="deepseek_api_key">Deepseek API Key:</label>
+        <input type="password" name="deepseek_api_key" id="deepseek_api_key" value="{{ config.deepseek_api_key }}">
+        <br><br>
+
+        <input type="submit" value="Save Settings">
+    </form>
+</body>
+</html>
