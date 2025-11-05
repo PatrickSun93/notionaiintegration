@@ -1673,4 +1673,12 @@ cleanup_thread.start()
 if __name__ == '__main__':
     # Development server configuration
     logger.info("Starting Notion AI Integration System with enhanced security")
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Allow overriding port via environment variable for local conflicts
+    # Use default 5000 if PORT not set
+    import os
+    try:
+        port = int(os.getenv('PORT', os.getenv('APP_PORT', '5000')))
+    except ValueError:
+        # Fallback to 5000 if an invalid port is provided
+        port = 5000
+    app.run(debug=True, host='0.0.0.0', port=port)
