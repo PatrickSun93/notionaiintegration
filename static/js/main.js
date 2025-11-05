@@ -126,7 +126,12 @@ async function apiCall(url, options = {}) {
                 throw new Error('Request too large. Please reduce the content size.');
             }
             
-            throw new Error(data.error || `API call failed (${response.status})`);
+            // Handle structured JSON errors returned by backend
+            // Supports both string errors and object { error: { message } }
+            const errMessage = (typeof data.error === 'string')
+                ? data.error
+                : (data && data.error && data.error.message) || data && data.message || `API call failed (${response.status})`;
+            throw new Error(errMessage);
         }
         
         return data;

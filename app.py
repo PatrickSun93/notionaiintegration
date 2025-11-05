@@ -207,6 +207,42 @@ def render_error_template(error_type, error_title, error_message, error_code=Non
     
     return render_template(template, **context), error_code or 500
 
+# Helper: decide whether the client expects a JSON error response
+def wants_json_response() -> bool:
+    """Return True when the request should receive JSON (API/Accept header).
+
+    We prefer JSON for:
+    - Paths under /api/*
+    - Requests whose Accept header includes application/json
+    This prevents the frontend from receiving HTML error pages when it expects
+    JSON, eliminating parse errors like "Unexpected token '<'".
+    """
+    try:
+        accept = request.headers.get('Accept', '')
+        if request.path.startswith('/api/'):
+            return True
+        if 'application/json' in accept:
+            return True
+    except Exception:
+        # Be safe: default to HTML when we cannot determine
+        return False
+    return False
+
+# Helper: build a consistent JSON error response
+def json_error_response(error_code: int, error_type: str, error_message: str, details: Optional[str] = None, extra: Optional[dict] = None):
+    payload = {
+        'error': {
+            'code': error_code,
+            'type': error_type,
+            'message': error_message,
+        }
+    }
+    if details and app.debug:
+        payload['error']['details'] = details
+    if extra:
+        payload.update(extra)
+    return jsonify(payload), error_code
+
 # Global error handlers with enhanced logging and recovery
 @app.errorhandler(404)
 def not_found_error(error):
@@ -222,6 +258,14 @@ def not_found_error(error):
         user_context={'url': request.url, 'method': request.method}
     )
     
+    if wants_json_response():
+        # Return JSON for API requests to avoid HTML parsing errors in frontend
+        return json_error_response(
+            404,
+            'not_found',
+            "The resource you're looking for doesn't exist or has been moved.",
+            extra={'path': request.path}
+        )
     return render_error_template(
         404,
         "Page Not Found",
@@ -249,6 +293,13 @@ def internal_error(error):
         user_context={'url': request.url, 'method': request.method}
     )
     
+    if wants_json_response():
+        return json_error_response(
+            500,
+            'internal_error',
+            "An unexpected error occurred on the server.",
+            details=traceback.format_exc() if app.debug else None
+        )
     return render_error_template(
         500,
         "Internal Server Error",
@@ -277,6 +328,12 @@ def handle_notion_error(error):
         request_id=request_id
     )
     
+    if wants_json_response():
+        return json_error_response(
+            503,
+            'notion_service_error',
+            f"There was an issue connecting to Notion: {str(error)}"
+        )
     return render_error_template(
         'configuration',
         "Notion Service Error",
@@ -303,6 +360,12 @@ def handle_configuration_error_handler(error):
         request_id=request_id
     )
     
+    if wants_json_response():
+        return json_error_response(
+            400,
+            'configuration_error',
+            f"There's an issue with your configuration: {str(error)}"
+        )
     return render_error_template(
         'configuration',
         "Configuration Error",
@@ -333,6 +396,13 @@ def handle_exception(error):
         user_context={'url': request.url, 'method': request.method}
     )
     
+    if wants_json_response():
+        return json_error_response(
+            500,
+            'unexpected_error',
+            "An unexpected error occurred. Please try again or contact support.",
+            details=traceback.format_exc() if app.debug else None
+        )
     return render_error_template(
         500,
         "Unexpected Error",
