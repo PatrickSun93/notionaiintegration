@@ -258,6 +258,16 @@ def suggest_recovery_actions(error: Exception, category: ErrorCategory) -> List[
     return error_info["recovery_suggestions"]
 
 
+class NotionServiceError(Exception):
+    """Custom exception for Notion service operations."""
+    pass
+
+
+class ConfigurationError(Exception):
+    """Custom exception for configuration-related errors."""
+    pass
+
+
 class ConfigurationRecovery:
     """Enhanced configuration recovery utilities with comprehensive backup management."""
     

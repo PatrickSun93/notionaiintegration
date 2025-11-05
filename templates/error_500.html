@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - Notion AI Integration{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-header">
+        <h2>Internal Server Error</h2>
+        <span class="error-code">Error 500</span>
+    </div>
+    
+    <div class="error-message">
+        <p>An unexpected error occurred on the server. Our team has been notified.</p>
+    </div>
+    
+    <div class="recovery-suggestions">
+        <h3>What you can try:</h3>
+        <ul>
+            <li>Wait a few minutes and try again</li>
+            <li>Check your internet connection</li>
+            <li>Verify your API keys in settings</li>
+            <li>Try a different browser or clear your cache</li>
+            <li>Contact support if the problem persists</li>
+        </ul>
+    </div>
+    
+    <div class="error-actions">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+        <button onclick="location.reload()" class="btn btn-secondary">Try Again</button>
+        <a href="{{ url_for('settings') }}" class="btn btn-secondary">Check Settings</a>
+    </div>
+</div>
+{% endblock %}
