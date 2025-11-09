@@ -1,0 +1,10 @@
+{
+  "provider": "openai",
+  "notion_api_key": "",
+  "openai_api_key": "",
+  "claude_api_key": "",
+  "deepseek_api_key": "",
+  "ollama_endpoint": "http://localhost:11434",
+  "blog_database_id": "",
+  "version": "1.0"
+}

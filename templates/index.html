@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Notion AI Integration{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="dashboard-header">
+        <h2>Welcome to Notion AI Integration</h2>
+        <p class="dashboard-subtitle">Enhance your Notion workspace with AI-powered content creation and management</p>
+    </div>
+    
+    <div class="quick-actions">
+        <a href="{{ url_for('chat') }}" class="btn btn-primary">
+            <span class="btn-icon">💬</span>
+            Chat with AI
+        </a>
+        <a href="{{ url_for('editor') }}" class="btn btn-secondary">
+            <span class="btn-icon">✏️</span>
+            Create New Page
+        </a>
+        <a href="{{ url_for('settings') }}" class="btn btn-outline">
+            <span class="btn-icon">⚙️</span>
+            Settings
+        </a>
+    </div>
+    
+    <div class="content-grid">
+        <div class="content-section">
+            <div class="section-header">
+                <h3>Recent Notion Pages</h3>
+                <button class="btn-refresh" onclick="loadDashboardContent()" title="Refresh content">
+                    <span class="refresh-icon">🔄</span>
+                </button>
+            </div>
+            <div id="pages-list" class="content-list">
+                <div class="loading-placeholder">
+                    <div class="loading-spinner"></div>
+                    <p>Loading pages...</p>
+                </div>
+            </div>
+            <div class="section-footer">
+                <a href="{{ url_for('chat') }}?action=browse_pages" class="link-secondary">View all pages →</a>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <div class="section-header">
+                <h3>Notion Databases</h3>
+                <button class="btn-refresh" onclick="loadDashboardContent()" title="Refresh content">
+                    <span class="refresh-icon">🔄</span>
+                </button>
+            </div>
+            <div id="databases-list" class="content-list">
+                <div class="loading-placeholder">
+                    <div class="loading-spinner"></div>
+                    <p>Loading databases...</p>
+                </div>
+            </div>
+            <div class="section-footer">
+                <a href="{{ url_for('editor') }}?action=select_database" class="link-secondary">Create page in database →</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-number" id="total-pages">-</div>
+            <div class="stat-label">Total Pages</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="total-databases">-</div>
+            <div class="stat-label">Databases</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="ai-provider">-</div>
+            <div class="stat-label">AI Provider</div>
+        </div>
+    </div>
+    
+    <div class="error-container" id="error-container" style="display: none;">
+        <div class="error-message" id="error-message"></div>
+        <div class="error-actions">
+            <button class="btn btn-primary" onclick="loadDashboardContent()">Retry</button>
+            <a href="{{ url_for('settings') }}" class="btn btn-outline">Check Settings</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Load dashboard content on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadDashboardContent();
+    });
+    
+    // Enhanced dashboard loading with better error handling
+    async function loadDashboardContent() {
+        const errorContainer = document.getElementById('error-container');
+        const pagesContainer = document.getElementById('pages-list');
+        const databasesContainer = document.getElementById('databases-list');
+        
+        // Hide error container
+        errorContainer.style.display = 'none';
+        
+        // Show loading state
+        showLoadingState();
+        
+        try {
+            // Load pages and databases in parallel
+            const [pagesResponse, databasesResponse, configResponse] = await Promise.all([
+                apiCall('/api/pages'),
+                apiCall('/api/databases'),
+                apiCall('/api/config')
+            ]);
+            
+            // Update pages
+            if (pagesResponse.success && pagesResponse.pages) {
+                displayPages(pagesResponse.pages);
+                document.getElementById('total-pages').textContent = pagesResponse.pages.length;
+            }
+            
+            // Update databases
+            if (databasesResponse.success && databasesResponse.databases) {
+                displayDatabases(databasesResponse.databases);
+                document.getElementById('total-databases').textContent = databasesResponse.databases.length;
+            }
+            
+            // Update AI provider info
+            if (configResponse.success && configResponse.config) {
+                document.getElementById('ai-provider').textContent = configResponse.config.provider || 'Not set';
+            }
+            
+        } catch (error) {
+            showDashboardError(error.message);
+        }
+    }
+    
+    function showLoadingState() {
+        const loadingHTML = `
+            <div class="loading-placeholder">
+                <div class="loading-spinner"></div>
+                <p>Loading...</p>
+            </div>
+        `;
+        document.getElementById('pages-list').innerHTML = loadingHTML;
+        document.getElementById('databases-list').innerHTML = loadingHTML;
+    }
+    
+    function displayPages(pages) {
+        const pagesContainer = document.getElementById('pages-list');
+        if (pages.length === 0) {
+            pagesContainer.innerHTML = '<div class="empty-state">No pages found. <a href="{{ url_for("editor") }}">Create your first page</a></div>';
+            return;
+        }
+        
+        pagesContainer.innerHTML = pages.slice(0, 5).map(page => `
+            <div class="content-item" onclick="openPageInChat('${page.id}')">
+                <div class="item-header">
+                    <h4 class="item-title">${escapeHtml(page.title || 'Untitled')}</h4>
+                    <span class="item-date">${formatDate(page.last_edited_time)}</span>
+                </div>
+                <div class="item-actions">
+                    <button class="btn-small btn-primary" onclick="event.stopPropagation(); openPageInChat('${page.id}')">Chat</button>
+                    <button class="btn-small btn-outline" onclick="event.stopPropagation(); openPageInEditor('${page.id}')">Edit</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function displayDatabases(databases) {
+        const databasesContainer = document.getElementById('databases-list');
+        if (databases.length === 0) {
+            databasesContainer.innerHTML = '<div class="empty-state">No databases found in your Notion workspace.</div>';
+            return;
+        }
+        
+        databasesContainer.innerHTML = databases.map(db => `
+            <div class="content-item" onclick="createPageInDatabase('${db.id}')">
+                <div class="item-header">
+                    <h4 class="item-title">${escapeHtml(db.title || 'Untitled Database')}</h4>
+                    <span class="item-count">${db.entry_count || 0} entries</span>
+                </div>
+                <div class="item-description">
+                    ${escapeHtml(db.description || 'No description')}
+                </div>
+                <div class="item-actions">
+                    <button class="btn-small btn-primary" onclick="event.stopPropagation(); createPageInDatabase('${db.id}')">Add Page</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function showDashboardError(message) {
+        const errorContainer = document.getElementById('error-container');
+        const errorMessage = document.getElementById('error-message');
+        
+        errorMessage.textContent = message;
+        errorContainer.style.display = 'block';
+        
+        // Hide content sections
+        document.getElementById('pages-list').innerHTML = '<div class="error-state">Failed to load pages</div>';
+        document.getElementById('databases-list').innerHTML = '<div class="error-state">Failed to load databases</div>';
+    }
+    
+    // Helper functions
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    function formatDate(dateString) {
+        if (!dateString) return 'Unknown';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric',
+            year: date.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+        });
+    }
+    
+    function openPageInChat(pageId) {
+        window.location.href = `{{ url_for('chat') }}?page_id=${pageId}`;
+    }
+    
+    function openPageInEditor(pageId) {
+        window.location.href = `{{ url_for('editor') }}?page_id=${pageId}`;
+    }
+    
+    function createPageInDatabase(databaseId) {
+        window.location.href = `{{ url_for('editor') }}?database_id=${databaseId}`;
+    }
+</script>
+{% endblock %}

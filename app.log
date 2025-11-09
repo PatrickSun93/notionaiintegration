@@ -1,0 +1,287 @@
+2025-11-04 21:44:22,487 - __main__ - INFO - Performed periodic security cleanup
+2025-11-04 21:44:22,487 - __main__ - INFO - Starting Notion AI Integration System with enhanced security
+2025-11-04 21:44:32,468 - app - INFO - Performed periodic security cleanup
+2025-11-04 21:44:32,486 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.192:5050
+2025-11-04 21:44:32,486 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-04 21:44:32,487 - werkzeug - INFO -  * Restarting with stat
+2025-11-04 21:44:40,604 - app - INFO - Performed periodic security cleanup
+2025-11-04 21:44:40,636 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.192:5050
+2025-11-04 21:44:40,637 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-04 21:44:46,354 - structured - INFO - Request started
+2025-11-04 21:44:46,355 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:44:46,355 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:44:46,355 - config.validation - INFO - Configuration validation completed. Valid: False
+2025-11-04 21:44:46,356 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:44:46,356 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:44:46,356 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:44:46,356 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:44:46,356 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:44:46,356 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:44:46,356 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:44:46,356 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:44:46,356 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:44:46,357 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:44:46,357 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:44:46,357 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:44:46,357 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:44:46,357 - app - WARNING - Dashboard accessed with invalid configuration
+2025-11-04 21:44:46,381 - structured - INFO - Request completed
+2025-11-04 21:44:46,381 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:44:46] "GET /?ide_webview_request_time=1762321486342 HTTP/1.1" 200 -
+2025-11-04 21:44:46,430 - structured - INFO - Request started
+2025-11-04 21:44:46,431 - structured - INFO - Request started
+2025-11-04 21:44:46,437 - structured - INFO - Request completed
+2025-11-04 21:44:46,437 - structured - INFO - Request completed
+2025-11-04 21:44:46,438 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:44:46] "GET /static/css/style.css HTTP/1.1" 200 -
+2025-11-04 21:44:46,438 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:44:46] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-11-04 21:44:46,463 - structured - INFO - Request started
+2025-11-04 21:44:46,464 - structured - INFO - Request started
+2025-11-04 21:44:46,465 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:44:46,465 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:44:46,465 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:44:46,465 - app - ERROR - Unexpected error getting pages: Notion API key not found in configuration
+2025-11-04 21:44:46,464 - structured - INFO - Request started
+2025-11-04 21:44:46,465 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:44:46,465 - structured - INFO - Request completed
+2025-11-04 21:44:46,465 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/api/config: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:44:46,465 - app - ERROR - Unexpected error getting databases: Notion API key not found in configuration
+2025-11-04 21:44:46,465 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:44:46] "[35m[1mGET /api/pages HTTP/1.1[0m" 500 -
+2025-11-04 21:44:46,465 - structured - ERROR - Application error
+2025-11-04 21:44:46,465 - structured - INFO - Request completed
+2025-11-04 21:44:46,466 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:44:46] "[35m[1mGET /api/databases HTTP/1.1[0m" 500 -
+2025-11-04 21:44:46,468 - structured - INFO - Request completed
+2025-11-04 21:44:46,468 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:44:46] "[33mGET /api/config HTTP/1.1[0m" 404 -
+2025-11-04 21:44:46,470 - structured - INFO - Request started
+2025-11-04 21:44:46,470 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/@vite/client: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:44:46,470 - structured - ERROR - Application error
+2025-11-04 21:44:46,470 - structured - INFO - Request completed
+2025-11-04 21:44:46,470 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:44:46] "[33mGET /@vite/client HTTP/1.1[0m" 404 -
+2025-11-04 21:48:02,304 - structured - INFO - Request started
+2025-11-04 21:48:02,304 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:02,305 - config.validation - INFO - Configuration validation completed. Valid: False
+2025-11-04 21:48:02,305 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:02,305 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:02,305 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:02,305 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:02,305 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:02,305 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:02,305 - app - WARNING - Dashboard accessed with invalid configuration
+2025-11-04 21:48:02,306 - structured - INFO - Request completed
+2025-11-04 21:48:02,306 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:02] "GET /?ide_webview_request_time=1762321486342 HTTP/1.1" 200 -
+2025-11-04 21:48:07,676 - structured - INFO - Request started
+2025-11-04 21:48:07,676 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:07,677 - config.validation - INFO - Configuration validation completed. Valid: False
+2025-11-04 21:48:07,677 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:07,677 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:07,677 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:07,677 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:07,677 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:07,678 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:48:07,678 - app - WARNING - Dashboard accessed with invalid configuration
+2025-11-04 21:48:07,678 - structured - INFO - Request completed
+2025-11-04 21:48:07,678 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:07] "GET /?ide_webview_request_time=1762321486342 HTTP/1.1" 200 -
+2025-11-04 21:48:07,730 - structured - INFO - Request started
+2025-11-04 21:48:07,731 - structured - INFO - Request started
+2025-11-04 21:48:07,732 - structured - INFO - Request completed
+2025-11-04 21:48:07,732 - structured - INFO - Request completed
+2025-11-04 21:48:07,732 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-04 21:48:07,732 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:07] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-04 21:48:07,765 - structured - INFO - Request started
+2025-11-04 21:48:07,766 - structured - INFO - Request started
+2025-11-04 21:48:07,766 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:07,766 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:07,766 - structured - INFO - Request started
+2025-11-04 21:48:07,767 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:07,767 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:07,767 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/api/config: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:48:07,767 - app - ERROR - Unexpected error getting pages: Notion API key not found in configuration
+2025-11-04 21:48:07,768 - app - ERROR - Unexpected error getting databases: Notion API key not found in configuration
+2025-11-04 21:48:07,768 - structured - INFO - Request started
+2025-11-04 21:48:07,768 - structured - ERROR - Application error
+2025-11-04 21:48:07,768 - structured - INFO - Request completed
+2025-11-04 21:48:07,768 - structured - INFO - Request completed
+2025-11-04 21:48:07,768 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/@vite/client: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:48:07,768 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:07] "[35m[1mGET /api/pages HTTP/1.1[0m" 500 -
+2025-11-04 21:48:07,768 - structured - INFO - Request completed
+2025-11-04 21:48:07,768 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:07] "[35m[1mGET /api/databases HTTP/1.1[0m" 500 -
+2025-11-04 21:48:07,768 - structured - ERROR - Application error
+2025-11-04 21:48:07,769 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:07] "[33mGET /api/config HTTP/1.1[0m" 404 -
+2025-11-04 21:48:07,770 - structured - INFO - Request completed
+2025-11-04 21:48:07,770 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:07] "[33mGET /@vite/client HTTP/1.1[0m" 404 -
+2025-11-04 21:48:17,109 - structured - INFO - Request started
+2025-11-04 21:48:17,110 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:17,110 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:17,111 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:17,112 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:17,112 - app - WARNING - Could not load pages for chat context: Notion API key not found in configuration
+2025-11-04 21:48:17,116 - structured - INFO - Request completed
+2025-11-04 21:48:17,117 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:17] "GET /chat HTTP/1.1" 200 -
+2025-11-04 21:48:17,125 - structured - INFO - Request started
+2025-11-04 21:48:17,126 - structured - INFO - Request started
+2025-11-04 21:48:17,127 - structured - INFO - Request started
+2025-11-04 21:48:17,128 - structured - INFO - Request completed
+2025-11-04 21:48:17,128 - structured - INFO - Request completed
+2025-11-04 21:48:17,129 - structured - INFO - Request completed
+2025-11-04 21:48:17,129 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:17] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-04 21:48:17,129 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:17] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-04 21:48:17,133 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:17] "GET /static/js/chat.js HTTP/1.1" 200 -
+2025-11-04 21:48:17,144 - structured - INFO - Request started
+2025-11-04 21:48:17,144 - structured - INFO - Request started
+2025-11-04 21:48:17,144 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/ws/chat: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:48:17,145 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:48:17,144 - structured - ERROR - Application error
+2025-11-04 21:48:17,145 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:48:17,145 - app - ERROR - Unexpected error getting pages: Notion API key not found in configuration
+2025-11-04 21:48:17,145 - structured - INFO - Request completed
+2025-11-04 21:48:17,146 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:17] "[35m[1mGET /api/pages HTTP/1.1[0m" 500 -
+2025-11-04 21:48:17,146 - structured - INFO - Request completed
+2025-11-04 21:48:17,147 - structured - INFO - Request started
+2025-11-04 21:48:17,148 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:17] "[33mGET /ws/chat HTTP/1.1[0m" 404 -
+2025-11-04 21:48:17,148 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/@vite/client: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:48:17,148 - structured - ERROR - Application error
+2025-11-04 21:48:17,149 - structured - INFO - Request completed
+2025-11-04 21:48:17,149 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:17] "[33mGET /@vite/client HTTP/1.1[0m" 404 -
+2025-11-04 21:48:18,172 - structured - INFO - Request started
+2025-11-04 21:48:18,173 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/ws/chat: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:48:18,173 - structured - ERROR - Application error
+2025-11-04 21:48:18,173 - structured - INFO - Request completed
+2025-11-04 21:48:18,174 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:18] "[33mGET /ws/chat HTTP/1.1[0m" 404 -
+2025-11-04 21:48:20,181 - structured - INFO - Request started
+2025-11-04 21:48:20,182 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/ws/chat: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:48:20,182 - structured - ERROR - Application error
+2025-11-04 21:48:20,183 - structured - INFO - Request completed
+2025-11-04 21:48:20,183 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:20] "[33mGET /ws/chat HTTP/1.1[0m" 404 -
+2025-11-04 21:48:22,314 - structured - INFO - Request started
+2025-11-04 21:48:22,315 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/@vite/client: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:48:22,315 - structured - ERROR - Application error
+2025-11-04 21:48:22,315 - structured - INFO - Request completed
+2025-11-04 21:48:22,315 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:48:22] "[33mGET /@vite/client HTTP/1.1[0m" 404 -
+2025-11-04 21:50:04,975 - __main__ - INFO - Performed periodic security cleanup
+2025-11-04 21:50:04,975 - __main__ - INFO - Starting Notion AI Integration System with enhanced security
+2025-11-04 21:50:05,001 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5050
+ * Running on http://192.168.0.192:5050
+2025-11-04 21:50:05,001 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-04 21:50:05,002 - werkzeug - INFO -  * Restarting with stat
+2025-11-04 21:50:05,095 - __main__ - INFO - Performed periodic security cleanup
+2025-11-04 21:50:05,095 - __main__ - INFO - Starting Notion AI Integration System with enhanced security
+2025-11-04 21:50:05,108 - werkzeug - WARNING -  * Debugger is active!
+2025-11-04 21:50:05,112 - werkzeug - INFO -  * Debugger PIN: 124-008-076
+2025-11-04 21:50:11,622 - structured - INFO - Request started
+2025-11-04 21:50:11,622 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:11,622 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:11,622 - config.validation - INFO - Configuration validation completed. Valid: False
+2025-11-04 21:50:11,622 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:11,622 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:11,622 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:11,622 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:11,622 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:11,622 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:11,623 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:11,623 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:11,623 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:11,623 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:11,623 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:11,623 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:11,623 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:11,623 - __main__ - WARNING - Dashboard accessed with invalid configuration
+2025-11-04 21:50:11,631 - structured - INFO - Request completed
+2025-11-04 21:50:11,631 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:11] "GET /?ide_webview_request_time=1762321811616 HTTP/1.1" 200 -
+2025-11-04 21:50:11,636 - structured - INFO - Request started
+2025-11-04 21:50:11,637 - structured - INFO - Request started
+2025-11-04 21:50:11,641 - structured - INFO - Request completed
+2025-11-04 21:50:11,642 - structured - INFO - Request completed
+2025-11-04 21:50:11,642 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:11] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-04 21:50:11,642 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:11] "[36mGET /static/js/main.js HTTP/1.1[0m" 304 -
+2025-11-04 21:50:11,648 - structured - INFO - Request started
+2025-11-04 21:50:11,649 - structured - INFO - Request started
+2025-11-04 21:50:11,650 - structured - INFO - Request started
+2025-11-04 21:50:11,650 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/api/config: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:50:11,650 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:11,650 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:11,650 - structured - INFO - Request started
+2025-11-04 21:50:11,650 - structured - ERROR - Application error
+2025-11-04 21:50:11,651 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:11,651 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:11,651 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/@vite/client: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:50:11,651 - structured - INFO - Request completed
+2025-11-04 21:50:11,651 - __main__ - ERROR - Unexpected error getting databases: Notion API key not found in configuration
+2025-11-04 21:50:11,651 - __main__ - ERROR - Unexpected error getting pages: Notion API key not found in configuration
+2025-11-04 21:50:11,652 - structured - ERROR - Application error
+2025-11-04 21:50:11,652 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:11] "[33mGET /api/config HTTP/1.1[0m" 404 -
+2025-11-04 21:50:11,652 - structured - INFO - Request completed
+2025-11-04 21:50:11,652 - structured - INFO - Request completed
+2025-11-04 21:50:11,652 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:11] "[35m[1mGET /api/databases HTTP/1.1[0m" 500 -
+2025-11-04 21:50:11,652 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:11] "[35m[1mGET /api/pages HTTP/1.1[0m" 500 -
+2025-11-04 21:50:11,655 - structured - INFO - Request completed
+2025-11-04 21:50:11,655 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:11] "[33mGET /@vite/client HTTP/1.1[0m" 404 -
+2025-11-04 21:50:30,257 - structured - INFO - Request started
+2025-11-04 21:50:30,258 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:30,258 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:30,258 - config.validation - INFO - Configuration validation completed. Valid: False
+2025-11-04 21:50:30,259 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:30,259 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:30,259 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:30,259 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:30,259 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:30,259 - config.ai_config - INFO - API key validation completed
+2025-11-04 21:50:30,259 - __main__ - WARNING - Dashboard accessed with invalid configuration
+2025-11-04 21:50:30,260 - structured - INFO - Request completed
+2025-11-04 21:50:30,260 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:30] "GET /?ide_webview_request_time=1762321830253 HTTP/1.1" 200 -
+2025-11-04 21:50:30,265 - structured - INFO - Request started
+2025-11-04 21:50:30,266 - structured - INFO - Request started
+2025-11-04 21:50:30,267 - structured - INFO - Request completed
+2025-11-04 21:50:30,268 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-11-04 21:50:30,267 - structured - INFO - Request completed
+2025-11-04 21:50:30,268 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:30] "GET /static/js/main.js HTTP/1.1" 200 -
+2025-11-04 21:50:30,276 - structured - INFO - Request started
+2025-11-04 21:50:30,277 - structured - INFO - Request started
+2025-11-04 21:50:30,277 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:30,278 - structured - INFO - Request started
+2025-11-04 21:50:30,278 - config.ai_config - INFO - Configuration loaded from file
+2025-11-04 21:50:30,278 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/api/config: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:50:30,278 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:30,279 - config.ai_config - INFO - Configuration loaded successfully
+2025-11-04 21:50:30,278 - structured - INFO - Request started
+2025-11-04 21:50:30,279 - __main__ - ERROR - Unexpected error getting databases: Notion API key not found in configuration
+2025-11-04 21:50:30,279 - structured - ERROR - Application error
+2025-11-04 21:50:30,279 - __main__ - ERROR - Unexpected error getting pages: Notion API key not found in configuration
+2025-11-04 21:50:30,279 - config.errors - INFO - [SYSTEM] 404 error for URL: http://127.0.0.1:5050/@vite/client: 404 Not Found: The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.
+2025-11-04 21:50:30,279 - structured - INFO - Request completed
+2025-11-04 21:50:30,279 - structured - INFO - Request completed
+2025-11-04 21:50:30,279 - structured - INFO - Request completed
+2025-11-04 21:50:30,279 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:30] "[35m[1mGET /api/databases HTTP/1.1[0m" 500 -
+2025-11-04 21:50:30,280 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:30] "[33mGET /api/config HTTP/1.1[0m" 404 -
+2025-11-04 21:50:30,279 - structured - ERROR - Application error
+2025-11-04 21:50:30,280 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:30] "[35m[1mGET /api/pages HTTP/1.1[0m" 500 -
+2025-11-04 21:50:30,281 - structured - INFO - Request completed
+2025-11-04 21:50:30,281 - werkzeug - INFO - 127.0.0.1 - - [04/Nov/2025 21:50:30] "[33mGET /@vite/client HTTP/1.1[0m" 404 -

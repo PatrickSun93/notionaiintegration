@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Chat - Notion AI Integration{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="chat-header">
+        <div class="chat-title">
+            <h2>AI Chat Assistant</h2>
+            <div class="chat-status" id="chat-status">
+                <span class="status-indicator"></span>
+                <span class="status-text">Ready</span>
+            </div>
+        </div>
+        <div class="chat-actions">
+            <button class="btn-icon" onclick="clearChat()" title="Clear chat">
+                <span>🗑️</span>
+            </button>
+            <button class="btn-icon" onclick="exportChat()" title="Export chat">
+                <span>📥</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="chat-controls">
+        <div class="control-group">
+            <label for="ai-provider">AI Provider:</label>
+            <select id="ai-provider" class="form-select">
+                <option value="openai">OpenAI (GPT-4)</option>
+                <option value="claude">Claude (Anthropic)</option>
+                <option value="deepseek">Deepseek</option>
+                <option value="ollama">Ollama (Local)</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="context-page">Page Context:</label>
+            <select id="context-page" class="form-select">
+                <option value="">No context selected</option>
+                <!-- Pages will be loaded dynamically -->
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <button class="btn btn-outline btn-small" onclick="loadContextPages()">
+                <span class="refresh-icon">🔄</span>
+                Refresh Pages
+            </button>
+        </div>
+    </div>
+    
+    <div class="chat-messages" id="chat-messages">
+        <div class="welcome-message">
+            <div class="welcome-icon">🤖</div>
+            <h3>Welcome to AI Chat!</h3>
+            <p>Start a conversation with your AI assistant. You can:</p>
+            <ul>
+                <li>Ask questions about your Notion content</li>
+                <li>Generate new content and ideas</li>
+                <li>Get summaries of your pages</li>
+                <li>Switch between different AI providers</li>
+            </ul>
+            <p class="welcome-tip">💡 <strong>Tip:</strong> Select a page from the context dropdown to chat about specific content.</p>
+        </div>
+    </div>
+    
+    <div class="chat-input">
+        <div class="input-container">
+            <textarea 
+                id="message-input" 
+                placeholder="Type your message... (Press Enter to send, Shift+Enter for new line)" 
+                rows="1"
+                maxlength="4000"
+            ></textarea>
+            <div class="input-actions">
+                <div class="character-count">
+                    <span id="char-count">0</span>/4000
+                </div>
+                <button id="send-button" class="btn btn-primary" disabled>
+                    <span class="btn-text">Send</span>
+                    <span class="btn-icon">📤</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="quick-actions" id="quick-actions">
+            <button class="quick-action-btn" onclick="insertQuickPrompt('Summarize this content')">
+                📝 Summarize
+            </button>
+            <button class="quick-action-btn" onclick="insertQuickPrompt('Generate ideas based on this content')">
+                💡 Generate Ideas
+            </button>
+            <button class="quick-action-btn" onclick="insertQuickPrompt('Create an outline for')">
+                📋 Create Outline
+            </button>
+            <button class="quick-action-btn" onclick="insertQuickPrompt('Explain this in simple terms')">
+                🎯 Simplify
+            </button>
+        </div>
+    </div>
+    
+    <div class="typing-indicator" id="typing-indicator" style="display: none;">
+        <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <span class="typing-text">AI is thinking...</span>
+    </div>
+</div>
+
+<!-- Context Preview Modal -->
+<div class="modal" id="context-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Page Context Preview</h3>
+            <button class="modal-close" onclick="closeContextModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="context-preview">
+                <!-- Context content will be loaded here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeContextModal()">Close</button>
+            <button class="btn btn-primary" onclick="useContextAndClose()">Use This Context</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

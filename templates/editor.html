@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Editor - Notion AI Integration{% endblock %}
+
+{% block content %}
+<div class="editor-container">
+    <div class="editor-header">
+        <div class="editor-title">
+            <h2>Page Editor</h2>
+            <div class="editor-status" id="editor-status">
+                <span class="status-indicator status-ready"></span>
+                <span class="status-text">Ready to create</span>
+            </div>
+        </div>
+        <div class="editor-actions">
+            <button class="btn-icon" onclick="loadTemplate()" title="Load template">
+                <span>📄</span>
+            </button>
+            <button class="btn-icon" onclick="aiAssist()" title="AI assistance">
+                <span>🤖</span>
+            </button>
+            <button class="btn-icon" onclick="clearEditor()" title="Clear all">
+                <span>🗑️</span>
+            </button>
+        </div>
+    </div>
+    
+    <form id="page-form" class="editor-form">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="database-select">Target Database:</label>
+                <select id="database-select" name="database_id" class="form-select" required>
+                    <option value="">Select a database...</option>
+                    <!-- Databases will be loaded dynamically -->
+                </select>
+                <div class="form-help">Choose where to create the new page</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="page-template">Template:</label>
+                <select id="page-template" class="form-select">
+                    <option value="">No template</option>
+                    <option value="blog-post">Blog Post</option>
+                    <option value="meeting-notes">Meeting Notes</option>
+                    <option value="project-plan">Project Plan</option>
+                    <option value="task-list">Task List</option>
+                    <option value="research-notes">Research Notes</option>
+                </select>
+                <div class="form-help">Optional: Start with a template</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="page-title">Page Title:</label>
+            <input 
+                type="text" 
+                id="page-title" 
+                name="title" 
+                class="form-input" 
+                placeholder="Enter a descriptive title..."
+                maxlength="200"
+                required
+            >
+            <div class="form-help">
+                <span id="title-count">0</span>/200 characters
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="page-content">Content:</label>
+            <div class="editor-toolbar">
+                <div class="toolbar-group">
+                    <button type="button" class="toolbar-btn" onclick="formatText('bold')" title="Bold">
+                        <strong>B</strong>
+                    </button>
+                    <button type="button" class="toolbar-btn" onclick="formatText('italic')" title="Italic">
+                        <em>I</em>
+                    </button>
+                    <button type="button" class="toolbar-btn" onclick="formatText('code')" title="Code">
+                        <code>&lt;/&gt;</code>
+                    </button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" class="toolbar-btn" onclick="insertText('# ')" title="Heading 1">
+                        H1
+                    </button>
+                    <button type="button" class="toolbar-btn" onclick="insertText('## ')" title="Heading 2">
+                        H2
+                    </button>
+                    <button type="button" class="toolbar-btn" onclick="insertText('- ')" title="Bullet List">
+                        •
+                    </button>
+                    <button type="button" class="toolbar-btn" onclick="insertText('1. ')" title="Numbered List">
+                        1.
+                    </button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" class="toolbar-btn" onclick="insertText('> ')" title="Quote">
+                        "
+                    </button>
+                    <button type="button" class="toolbar-btn" onclick="insertText('---\n')" title="Divider">
+                        ―
+                    </button>
+                </div>
+                <div class="toolbar-group">
+                    <button type="button" class="toolbar-btn" onclick="aiSuggest()" title="AI Suggestions">
+                        🤖 AI
+                    </button>
+                </div>
+            </div>
+            <textarea 
+                id="page-content" 
+                name="content" 
+                class="form-textarea editor-textarea" 
+                rows="20" 
+                placeholder="Start writing your content here...
+
+You can use Markdown formatting:
+- **bold text** or *italic text*
+- # Headings
+- - Bullet points
+- > Quotes
+- `code`
+
+Use the toolbar above for quick formatting or ask AI for help!"
+                maxlength="50000"
+            ></textarea>
+            <div class="form-help">
+                <span id="content-count">0</span>/50,000 characters • Markdown supported
+            </div>
+        </div>
+        
+        <div class="form-actions">
+            <button type="button" id="preview-button" class="btn btn-outline">
+                <span class="btn-icon">👁️</span>
+                Preview
+            </button>
+            <button type="button" id="validate-button" class="btn btn-secondary">
+                <span class="btn-icon">✓</span>
+                Validate
+            </button>
+            <button type="submit" id="save-button" class="btn btn-primary">
+                <span class="btn-icon">💾</span>
+                Save to Notion
+            </button>
+        </div>
+    </form>
+    
+    <div id="preview-container" class="preview-container" style="display: none;">
+        <div class="preview-header">
+            <h3>Content Preview</h3>
+            <button class="btn btn-outline btn-small" onclick="hidePreview()">Close Preview</button>
+        </div>
+        <div id="preview-content" class="preview-content"></div>
+    </div>
+    
+    <div id="validation-results" class="validation-container" style="display: none;">
+        <div class="validation-header">
+            <h3>Content Validation</h3>
+            <button class="btn btn-outline btn-small" onclick="hideValidation()">Close</button>
+        </div>
+        <div id="validation-content" class="validation-content"></div>
+    </div>
+</div>
+
+<!-- AI Assistant Modal -->
+<div class="modal" id="ai-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>AI Writing Assistant</h3>
+            <button class="modal-close" onclick="closeAiModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="ai-options">
+                <button class="ai-option-btn" onclick="aiAction('improve')">
+                    ✨ Improve Writing
+                </button>
+                <button class="ai-option-btn" onclick="aiAction('expand')">
+                    📝 Expand Content
+                </button>
+                <button class="ai-option-btn" onclick="aiAction('summarize')">
+                    📋 Summarize
+                </button>
+                <button class="ai-option-btn" onclick="aiAction('outline')">
+                    🗂️ Create Outline
+                </button>
+            </div>
+            <div class="ai-custom">
+                <label for="ai-prompt">Custom AI Request:</label>
+                <textarea id="ai-prompt" placeholder="Describe what you want AI to help with..." rows="3"></textarea>
+                <button class="btn btn-primary" onclick="aiAction('custom')">Generate</button>
+            </div>
+            <div id="ai-result" class="ai-result" style="display: none;">
+                <h4>AI Suggestion:</h4>
+                <div id="ai-content"></div>
+                <div class="ai-actions">
+                    <button class="btn btn-outline" onclick="closeAiModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="applyAiSuggestion()">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template Modal -->
+<div class="modal" id="template-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Choose Template</h3>
+            <button class="modal-close" onclick="closeTemplateModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="template-grid">
+                <div class="template-card" onclick="applyTemplate('blog-post')">
+                    <div class="template-icon">📝</div>
+                    <h4>Blog Post</h4>
+                    <p>Structure for blog articles with introduction, main content, and conclusion</p>
+                </div>
+                <div class="template-card" onclick="applyTemplate('meeting-notes')">
+                    <div class="template-icon">📋</div>
+                    <h4>Meeting Notes</h4>
+                    <p>Template for meeting minutes with agenda, attendees, and action items</p>
+                </div>
+                <div class="template-card" onclick="applyTemplate('project-plan')">
+                    <div class="template-icon">🎯</div>
+                    <h4>Project Plan</h4>
+                    <p>Project planning template with objectives, timeline, and deliverables</p>
+                </div>
+                <div class="template-card" onclick="applyTemplate('task-list')">
+                    <div class="template-icon">✅</div>
+                    <h4>Task List</h4>
+                    <p>Organized task list with priorities and due dates</p>
+                </div>
+                <div class="template-card" onclick="applyTemplate('research-notes')">
+                    <div class="template-icon">🔬</div>
+                    <h4>Research Notes</h4>
+                    <p>Structure for research documentation with sources and findings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+{% endblock %}

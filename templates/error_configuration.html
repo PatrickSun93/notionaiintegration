@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Configuration Error - Notion AI Integration{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-header">
+        <h2>Configuration Error</h2>
+        <span class="error-code">Config Error</span>
+    </div>
+    
+    <div class="error-message">
+        <p>{{ error_message or "There's an issue with your configuration that needs to be resolved." }}</p>
+    </div>
+    
+    {% if validation_errors %}
+    <div class="validation-errors">
+        <h3>Configuration Issues:</h3>
+        <ul>
+            {% for error in validation_errors %}
+            <li><strong>{{ error.field }}:</strong> {{ error.message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    <div class="recovery-suggestions">
+        <h3>How to fix this:</h3>
+        <ul>
+            <li>Go to Settings and check your configuration</li>
+            <li>Verify all API keys are correctly entered</li>
+            <li>Ensure you've selected a valid AI provider</li>
+            <li>Test your API connections</li>
+            {% if recovery_suggestions %}
+                {% for suggestion in recovery_suggestions %}
+                <li>{{ suggestion }}</li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+    </div>
+    
+    <div class="error-actions">
+        <a href="{{ url_for('settings') }}" class="btn btn-primary">Fix Configuration</a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Go to Dashboard</a>
+    </div>
+</div>
+
+<style>
+.validation-errors {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.validation-errors h3 {
+    margin-top: 0;
+    color: #856404;
+}
+
+.validation-errors ul {
+    margin-bottom: 0;
+}
+
+.validation-errors li {
+    margin-bottom: 0.5rem;
+}
+</style>
+{% endblock %}

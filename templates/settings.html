@@ -1,0 +1,349 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - Notion AI Integration{% endblock %}
+
+{% block content %}
+<div class="settings-container">
+    <div class="settings-header">
+        <div class="settings-title">
+            <h2>Configuration Settings</h2>
+            <div class="settings-status" id="settings-status">
+                <span class="status-indicator status-ready"></span>
+                <span class="status-text">Ready to configure</span>
+            </div>
+        </div>
+        <div class="settings-actions">
+            <button class="btn-icon" onclick="exportSettings()" title="Export settings">
+                <span>📥</span>
+            </button>
+            <button class="btn-icon" onclick="importSettings()" title="Import settings">
+                <span>📤</span>
+            </button>
+            <button class="btn-icon" onclick="resetSettings()" title="Reset to defaults">
+                <span>🔄</span>
+            </button>
+        </div>
+    </div>
+
+    <form id="settings-form" class="settings-form">
+        <!-- CSRF Protection -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+        <!-- Notion Configuration Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <h3>
+                    <span class="section-icon">🔗</span>
+                    Notion Configuration
+                </h3>
+                <div class="section-status" id="notion-status">
+                    <span class="connection-indicator" data-status="unknown"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notion-api-key">
+                    Notion Integration Token
+                    <span class="required">*</span>
+                </label>
+                <div class="input-with-actions">
+                    <input type="password" id="notion-api-key" name="notion_api_key" class="form-input"
+                        placeholder="secret_..." required>
+                    <button type="button" class="input-action-btn" onclick="togglePasswordVisibility('notion-api-key')"
+                        title="Show/Hide">
+                        👁️
+                    </button>
+                    <button type="button" class="input-action-btn" onclick="testNotionConnection()"
+                        title="Test Connection">
+                        🔍
+                    </button>
+                </div>
+                <div class="form-help">
+                    <p>Get your integration token from <a href="https://www.notion.so/my-integrations"
+                            target="_blank">Notion Integrations</a></p>
+                    <details>
+                        <summary>How to get your Notion token</summary>
+                        <ol>
+                            <li>Go to <a href="https://www.notion.so/my-integrations"
+                                    target="_blank">notion.so/my-integrations</a></li>
+                            <li>Click "New integration"</li>
+                            <li>Give it a name and select your workspace</li>
+                            <li>Copy the "Internal Integration Token"</li>
+                            <li>Share your pages/databases with the integration</li>
+                        </ol>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Provider Configuration Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <h3>
+                    <span class="section-icon">🤖</span>
+                    AI Provider Configuration
+                </h3>
+                <div class="section-status" id="ai-status">
+                    <span class="connection-indicator" data-status="unknown"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="default-provider">
+                    Default AI Provider
+                    <span class="required">*</span>
+                </label>
+                <select id="default-provider" name="provider" class="form-select" required>
+                    <option value="">Select a provider...</option>
+                    <option value="openai">OpenAI (GPT-4, GPT-3.5)</option>
+                    <option value="claude">Claude (Anthropic)</option>
+                    <option value="deepseek">Deepseek</option>
+                    <option value="ollama">Ollama (Local)</option>
+                </select>
+                <div class="form-help">Choose your preferred AI provider for content generation</div>
+            </div>
+
+            <!-- OpenAI Configuration -->
+            <div class="provider-config" id="openai-config">
+                <div class="provider-header">
+                    <h4>
+                        <span class="provider-icon">🧠</span>
+                        OpenAI Configuration
+                    </h4>
+                    <div class="provider-status" id="openai-provider-status">
+                        <span class="connection-indicator" data-status="unknown"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="openai-api-key">OpenAI API Key</label>
+                    <div class="input-with-actions">
+                        <input type="password" id="openai-api-key" name="openai_api_key" class="form-input"
+                            placeholder="sk-...">
+                        <button type="button" class="input-action-btn"
+                            onclick="togglePasswordVisibility('openai-api-key')" title="Show/Hide">
+                            👁️
+                        </button>
+                        <button type="button" class="input-action-btn" onclick="testProviderConnection('openai')"
+                            title="Test Connection">
+                            🔍
+                        </button>
+                    </div>
+                    <div class="form-help">
+                        Get your API key from <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI
+                            Platform</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Claude Configuration -->
+            <div class="provider-config" id="claude-config">
+                <div class="provider-header">
+                    <h4>
+                        <span class="provider-icon">🎭</span>
+                        Claude Configuration
+                    </h4>
+                    <div class="provider-status" id="claude-provider-status">
+                        <span class="connection-indicator" data-status="unknown"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="claude-api-key">Claude API Key</label>
+                    <div class="input-with-actions">
+                        <input type="password" id="claude-api-key" name="claude_api_key" class="form-input"
+                            placeholder="sk-ant-...">
+                        <button type="button" class="input-action-btn"
+                            onclick="togglePasswordVisibility('claude-api-key')" title="Show/Hide">
+                            👁️
+                        </button>
+                        <button type="button" class="input-action-btn" onclick="testProviderConnection('claude')"
+                            title="Test Connection">
+                            🔍
+                        </button>
+                    </div>
+                    <div class="form-help">
+                        Get your API key from <a href="https://console.anthropic.com/" target="_blank">Anthropic
+                            Console</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deepseek Configuration -->
+            <div class="provider-config" id="deepseek-config">
+                <div class="provider-header">
+                    <h4>
+                        <span class="provider-icon">🔍</span>
+                        Deepseek Configuration
+                    </h4>
+                    <div class="provider-status" id="deepseek-provider-status">
+                        <span class="connection-indicator" data-status="unknown"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="deepseek-api-key">Deepseek API Key</label>
+                    <div class="input-with-actions">
+                        <input type="password" id="deepseek-api-key" name="deepseek_api_key" class="form-input"
+                            placeholder="sk-...">
+                        <button type="button" class="input-action-btn"
+                            onclick="togglePasswordVisibility('deepseek-api-key')" title="Show/Hide">
+                            👁️
+                        </button>
+                        <button type="button" class="input-action-btn" onclick="testProviderConnection('deepseek')"
+                            title="Test Connection">
+                            🔍
+                        </button>
+                    </div>
+                    <div class="form-help">
+                        Get your API key from <a href="https://platform.deepseek.com/" target="_blank">Deepseek
+                            Platform</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ollama Configuration -->
+            <div class="provider-config" id="ollama-config">
+                <div class="provider-header">
+                    <h4>
+                        <span class="provider-icon">🏠</span>
+                        Ollama Configuration (Local)
+                    </h4>
+                    <div class="provider-status" id="ollama-provider-status">
+                        <span class="connection-indicator" data-status="unknown"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ollama-endpoint">Ollama Endpoint</label>
+                    <div class="input-with-actions">
+                        <input type="url" id="ollama-endpoint" name="ollama_endpoint" class="form-input"
+                            placeholder="http://localhost:11434" value="http://localhost:11434">
+                        <button type="button" class="input-action-btn" onclick="testProviderConnection('ollama')"
+                            title="Test Connection">
+                            🔍
+                        </button>
+                    </div>
+                    <div class="form-help">
+                        Local Ollama server endpoint. <a href="https://ollama.ai/" target="_blank">Install Ollama</a> to
+                        use local models.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Database Configuration Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <h3>
+                    <span class="section-icon">🗄️</span>
+                    Database Configuration
+                </h3>
+                <button type="button" class="btn btn-outline btn-small" onclick="loadDatabaseOptions()">
+                    <span class="refresh-icon">🔄</span>
+                    Refresh Databases
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label for="blog-database-id">Default Blog Database</label>
+                <select id="blog-database-id" name="blog_database_id" class="form-select">
+                    <option value="">Select a database...</option>
+                    <!-- Databases will be loaded dynamically -->
+                </select>
+                <div class="form-help">Choose the default database for creating blog posts and articles</div>
+            </div>
+        </div>
+
+        <!-- Advanced Settings Section -->
+        <div class="settings-section">
+            <div class="section-header">
+                <h3>
+                    <span class="section-icon">⚙️</span>
+                    Advanced Settings
+                </h3>
+            </div>
+
+            <div class="form-group">
+                <label for="auto-save">
+                    <input type="checkbox" id="auto-save" name="auto_save" value="true">
+                    Enable auto-save in editor
+                </label>
+                <div class="form-help">Automatically save drafts while editing</div>
+            </div>
+
+            <div class="form-group">
+                <label for="chat-history">
+                    <input type="checkbox" id="chat-history" name="chat_history" value="true" checked>
+                    Save chat history
+                </label>
+                <div class="form-help">Keep chat conversations in browser storage</div>
+            </div>
+
+            <div class="form-group">
+                <label for="ai-timeout">AI Request Timeout (seconds)</label>
+                <input type="number" id="ai-timeout" name="ai_timeout" class="form-input" value="30" min="10" max="120">
+                <div class="form-help">Maximum time to wait for AI responses</div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" id="test-all" class="btn btn-outline">
+                <span class="btn-icon">🔍</span>
+                Test All Connections
+            </button>
+            <button type="button" id="validate-config" class="btn btn-secondary">
+                <span class="btn-icon">✓</span>
+                Validate Configuration
+            </button>
+            <button type="submit" id="save-settings" class="btn btn-primary">
+                <span class="btn-icon">💾</span>
+                Save Settings
+            </button>
+        </div>
+    </form>
+
+    <div id="test-results" class="test-results" style="display: none;">
+        <div class="test-header">
+            <h3>Connection Test Results</h3>
+            <button class="btn btn-outline btn-small" onclick="hideTestResults()">Close</button>
+        </div>
+        <div id="test-content" class="test-content">
+            <!-- Test results will be displayed here -->
+        </div>
+    </div>
+
+    <div id="validation-results" class="validation-results" style="display: none;">
+        <div class="validation-header">
+            <h3>Configuration Validation</h3>
+            <button class="btn btn-outline btn-small" onclick="hideValidationResults()">Close</button>
+        </div>
+        <div id="validation-content" class="validation-content">
+            <!-- Validation results will be displayed here -->
+        </div>
+    </div>
+</div>
+
+<!-- Import Settings Modal -->
+<div class="modal" id="import-modal" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Import Settings</h3>
+            <button class="modal-close" onclick="closeImportModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="settings-file">Select settings file:</label>
+                <input type="file" id="settings-file" accept=".json" class="form-input">
+            </div>
+            <div class="form-help">
+                Import previously exported settings. This will overwrite current configuration.
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeImportModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="processImport()">Import</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}
